@@ -1,0 +1,17 @@
+{
+  "name": "inspector-web",
+  "version": "1.0.0",
+  "description": "Analizador profesional de fuentes y estilos web con Puppeteer y CSV export.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alberto Hilal",
+  "license": "MIT",
+  "dependencies": {
+    "csv-writer": "^1.6.0",
+    "puppeteer": "^24.27.0"
+  }
+}

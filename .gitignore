@@ -1,0 +1,12 @@
+
+---
+
+## 🧩 Paso 2: commit y push
+
+Asegurate de tener `.gitignore` (para excluir `node_modules/` y `reportes/`):
+
+```bash
+echo "node_modules/
+reportes/
+*.log
+.DS_Store" > .gitignore
