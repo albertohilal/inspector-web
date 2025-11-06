@@ -53,8 +53,20 @@ function colorDistancia(c1, c2) {
   return Math.sqrt((r1 - r2) ** 2 + (g1 - g2) ** 2 + (b1 - b2) ** 2);
 }
 
+function esColorTransparente(color) {
+  if (!color || !color.startsWith('rgba')) return false;
+  const match = color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([01](?:\.\d+)?)\)/);
+  if (!match) return false;
+  const alpha = parseFloat(match[4]);
+  return alpha === 0; // Completamente transparente
+}
+
 function estaEnPaletaLusso(color) {
   if (!color || !color.startsWith('rgb')) return false;
+  
+  // Los colores transparentes se consideran válidos
+  if (esColorTransparente(color)) return true;
+  
   const match = color.match(/\d+/g);
   if (!match) return false;
   const c = match.map(Number);
@@ -103,9 +115,30 @@ function validarTipografia(fontFamily) {
     const elements = [...document.querySelectorAll("*")];
     const report = elements.map(el => {
       const style = window.getComputedStyle(el);
+      
+      // Generar selector CSS más específico
+      let cssSelector = el.tagName.toLowerCase();
+      if (el.id) {
+        cssSelector += `#${el.id}`;
+      }
+      if (el.className && typeof el.className === 'string') {
+        const classes = el.className.trim().split(/\s+/).slice(0, 3);
+        if (classes.length > 0 && classes[0]) {
+          cssSelector += '.' + classes.join('.');
+        }
+      }
+
+      // Obtener posición
+      const rect = el.getBoundingClientRect();
+      
       return {
+        selector: cssSelector,
         tag: el.tagName.toLowerCase(),
-        text: el.textContent.trim().slice(0, 80), // recorte de texto
+        posX: Math.round(rect.left),
+        posY: Math.round(rect.top),
+        width: Math.round(rect.width),
+        height: Math.round(rect.height),
+        text: el.textContent.trim().slice(0, 80),
         fontFamily: style.fontFamily,
         fontSize: style.fontSize,
         color: style.color,
@@ -123,7 +156,12 @@ function validarTipografia(fontFamily) {
 
     return {
       url: url,
-      selector: item.tag,
+      selector_css: item.selector,
+      elemento_tag: item.tag,
+      posicion_x: item.posX,
+      posicion_y: item.posY,
+      ancho: item.width,
+      alto: item.height,
       texto: item.text,
       fuente: item.fontFamily,
       'tipografia_check': tipografiaOK ? '✅' : '❌',
@@ -145,8 +183,8 @@ function validarTipografia(fontFamily) {
   // --- Exportar CSV ---
   const csv = parse(processedData, { 
     fields: [
-      'url', 'selector', 'texto', 'fuente', 'tipografia_check', 
-      'color_texto', 'color_fondo', 'paleta_lusso', 'cumple_estandar'
+      'url', 'selector_css', 'elemento_tag', 'posicion_x', 'posicion_y', 'ancho', 'alto',
+      'texto', 'fuente', 'tipografia_check', 'color_texto', 'color_fondo', 'paleta_lusso', 'cumple_estandar'
     ]
   });
   fs.writeFileSync(csvPath, csv, "utf8");

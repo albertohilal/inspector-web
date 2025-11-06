@@ -26,8 +26,20 @@ function colorDistancia(c1, c2) {
   return Math.sqrt((r1 - r2) ** 2 + (g1 - g2) ** 2 + (b1 - b2) ** 2);
 }
 
+function esColorTransparente(color) {
+  if (!color || !color.startsWith('rgba')) return false;
+  const match = color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([01](?:\.\d+)?)\)/);
+  if (!match) return false;
+  const alpha = parseFloat(match[4]);
+  return alpha === 0; // Completamente transparente
+}
+
 function estaEnPaletaCorporativa(color) {
   if (!color || !color.startsWith('rgb')) return false;
+  
+  // Los colores transparentes se consideran válidos
+  if (esColorTransparente(color)) return true;
+  
   const match = color.match(/\d+/g);
   if (!match) return false;
   const c = match.map(Number);
@@ -36,6 +48,10 @@ function estaEnPaletaCorporativa(color) {
 
 function estaEnPaletaExtendida(color) {
   if (!color || !color.startsWith('rgb')) return false;
+  
+  // Los colores transparentes se consideran válidos
+  if (esColorTransparente(color)) return true;
+  
   const match = color.match(/\d+/g);
   if (!match) return false;
   const c = match.map(Number);
@@ -82,7 +98,12 @@ const csvWriter = createObjectCsvWriter({
   path: csvPath,
   header: [
     { id: 'url', title: 'URL' },
-    { id: 'selector', title: 'Selector' },
+    { id: 'selector', title: 'Selector CSS' },
+    { id: 'elemento_tag', title: 'Tag' },
+    { id: 'posicion_x', title: 'Pos X' },
+    { id: 'posicion_y', title: 'Pos Y' },
+    { id: 'ancho', title: 'Ancho' },
+    { id: 'alto', title: 'Alto' },
     { id: 'texto', title: 'Texto' },
     { id: 'fuente', title: 'Fuente detectada' },
     { id: 'tipografia_check', title: '✅ Tipografía OK' },
@@ -106,7 +127,7 @@ async function analyzePage(targetUrl) {
     const elements = Array.from(document.querySelectorAll('*'));
     const data = [];
 
-    elements.forEach(el => {
+    elements.forEach((el, index) => {
       const style = window.getComputedStyle(el);
       const font = style.fontFamily || '';
       const color = style.color || '';
@@ -114,8 +135,28 @@ async function analyzePage(targetUrl) {
       const text = el.innerText?.trim();
 
       if (text && text.length > 2) {
+        // Generar selector CSS más específico
+        let cssSelector = el.tagName.toLowerCase();
+        if (el.id) {
+          cssSelector += `#${el.id}`;
+        }
+        if (el.className && typeof el.className === 'string') {
+          const classes = el.className.trim().split(/\s+/).slice(0, 3); // Máximo 3 clases
+          if (classes.length > 0 && classes[0]) {
+            cssSelector += '.' + classes.join('.');
+          }
+        }
+
+        // Obtener posición en la página
+        const rect = el.getBoundingClientRect();
+        
         data.push({
-          selector: el.tagName.toLowerCase(),
+          selector: cssSelector,
+          elemento_tag: el.tagName.toLowerCase(),
+          posicion_x: Math.round(rect.left),
+          posicion_y: Math.round(rect.top),
+          ancho: Math.round(rect.width),
+          alto: Math.round(rect.height),
           texto: text.slice(0, 80).replace(/\s+/g, ' '),
           fuente: font,
           color_texto: color,

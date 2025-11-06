@@ -51,9 +51,14 @@ node index_v2.js -- --file urls.txt
 - 🟡 **Paleta Corporativa Lusso** (`#d3af37`, `#000000`, `#ffffff`, `#f5f5f5`)
 - 🎨 **Paleta Extendida** (variaciones adicionales permitidas)
 - ⭐ **Cumplimiento de Estándar** (tipografía + paleta válida)
-- 📊 **Estadísticas automáticas** con porcentajes de cumplimiento
+- � **Identificación precisa** con selector CSS y posición
+- 👻 **Manejo inteligente de transparencias** (alpha=0 considerado válido)
+- �📊 **Estadísticas automáticas** con porcentajes de cumplimiento
 
 **Columnas del reporte CSV:**
+- `Selector CSS` - Identificador específico del elemento (ej: `div.header#menu`)
+- `Pos X/Y` - Coordenadas exactas en la página
+- `Ancho/Alto` - Dimensiones del elemento
 - `✅ Tipografía OK` - Check individual de fuentes
 - `🟡 Paleta Lusso` - Check de paleta corporativa oficial  
 - `🎨 Paleta Extendida` - Check de paleta ampliada
@@ -100,19 +105,58 @@ Los reportes se guardan automáticamente con fecha y hora:
 
 🎨 **Detección de colores de texto y fondo** - ✅ Disponible
 
-🟡 **Comparación automática con la paleta corporativa de Lusso** (`#d3af37`, `#000000`, `#ffffff`, `#f5f5f5`) - ✅ Disponible en V2.0
+🟡 **Comparación automática con la paleta corporativa de Lusso** (`#d3af37`, `#000000`, `#ffffff`, `#f5f5f5`) - ✅ Disponible
 
 ⚡ **Optimización para servidores lentos** - ✅ Disponible en V2.1
 
+🔍 **Identificación precisa de elementos** - ✅ Disponible
+
+👻 **Manejo inteligente de transparencias** - ✅ Disponible
+
 ---
 
-## � Próximas mejoras (V3)
+## 🔍 Identificación de Elementos Problemáticos
 
-�📘 Generación de reportes de accesibilidad (contraste WCAG)
+### 📍 **Información de localización incluida:**
+- **Selector CSS completo:** `div.elementor-element.elementor-element-5a1b6199.lusso-header`
+- **Posición exacta:** Coordenadas X,Y en la página
+- **Dimensiones:** Ancho y alto del elemento
+- **Contenido:** Texto visible del elemento
 
-🔍 Análisis de elementos específicos por selector CSS
+### 🎨 **Manejo de transparencias:**
+- **Colores transparentes** (`rgba(r,g,b,0)`) se consideran **válidos** ✅
+- Solo se validan **colores visibles** (alpha > 0)
+- **Análisis más preciso** del cumplimiento real de la paleta
 
-📱 Detección responsive y breakpoints
+### 🔧 **Ejemplo de uso para debugging:**
+```bash
+# Ejecutar análisis
+node index_v2.js --url https://tudominio.com
+
+# Buscar elementos problemáticos en el CSV
+grep "❌" reportes/reporte-v2-2025-11-06-HHMM.csv
+
+# El reporte te dará:
+# - Selector CSS exacto para localizar en el código
+# - Posición en pantalla para encontrar visualmente  
+# - Colores específicos que causan el problema
+```
+
+---
+
+## 🚧 Próximas mejoras (V3)
+
+ **Reportes de accesibilidad** - Análisis de contraste WCAG AA/AAA
+
+🧪 **Análisis de elementos específicos** - Filtros por selector CSS personalizado
+
+📱 **Detección responsive** - Análisis en múltiples breakpoints (mobile, tablet, desktop)
+
+🎨 **Paletas personalizables** - Configuración de colores corporativos por proyecto
+
+📈 **Dashboard web** - Interface visual para análisis y comparaciones
+
+🔄 **Análisis comparativo** - Diferencias entre versiones del sitio
 
 🧑‍💻 Autor
 
