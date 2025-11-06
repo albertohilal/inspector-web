@@ -1,0 +1,75 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+/* === LUSSO GROUP — TESTIMONIAL CAROUSEL === */
+/* Clase contenedora: agregá "lusso-testimonial" al widget desde Avanzado > Clase CSS */
+
+.lusso-testimonial .elementor-testimonial__text {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  color: #404040 !important; /* gris intenso */
+  max-width: 320px;
+  margin: 0 auto !important;
+  text-align: left !important;
+  padding: 0 10px !important;
+}
+
+.lusso-testimonial .elementor-testimonial__title {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  color: #0D0D0D !important; /* negro principal */
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.lusso-testimonial .elementor-testimonial__name {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+  color: #B8860B !important; /* dorado oscuro */
+  margin: 0 !important;
+}
+
+/* Oculta el placeholder */
+.lusso-testimonial .elementor-testimonial__image img[src*="placeholder.png"] {
+  display: none !important;
+}
+
+/* Elementos decorativos (divider, texto adicional) */
+.lusso-testimonial .process-card__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #404040;
+  margin: 0 0 1rem;
+}
+
+.lusso-testimonial .process-card__divider {
+  width: 100%;
+  border-top: 1px solid #B8860B;
+  position: relative;
+  margin: 0 auto 1.5rem;
+}
+
+.lusso-testimonial .process-card__divider::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background-color: #B8860B;
+  border-radius: 50%;
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.lusso-testimonial .process-card__text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #404040;
+  margin: 0;
+}
+</style>
+<!-- end Simple Custom CSS and JS -->
