@@ -77,10 +77,12 @@ node index_v2.1.js -- --url https://lussogroup.demo.ar.nf/investment/
 
 ### 📊 Archivos de salida
 
-Los reportes se guardan automáticamente en:
-- **V1.0:** `/reportes/reporte-AAAA-MM-DD.csv`
-- **V2.0:** `/reportes/reporte-AAAA-MM-DD.csv`
-- **V2.1:** `/reportes/reporte-v2.1-AAAA-MM-DD.csv`
+Los reportes se guardan automáticamente con fecha y hora:
+- **V1.0:** `/reportes/reporte-AAAA-MM-DD-HHMM.csv`
+- **V2.0:** `/reportes/reporte-v2-AAAA-MM-DD-HHMM.csv`
+- **V2.1:** `/reportes/reporte-v2.1-AAAA-MM-DD-HHMM.csv`
+
+**Ejemplo:** `reporte-v2-2025-11-06-1330.csv` (6 nov 2025 a las 13:30)
 
 ---
 

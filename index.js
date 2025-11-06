@@ -41,7 +41,10 @@ if (!url && !file) {
 
 // === SALIDA ===
 ensureDir(OUTPUT_DIR);
-const reportName = `reporte-${new Date().toISOString().split('T')[0]}.csv`;
+const now = new Date();
+const fecha = now.toISOString().split('T')[0]; // YYYY-MM-DD
+const hora = now.toTimeString().slice(0, 5).replace(':', ''); // HHMM
+const reportName = `reporte-${fecha}-${hora}.csv`;
 const csvPath = path.join(OUTPUT_DIR, reportName);
 
 const csvWriter = createObjectCsvWriter({
