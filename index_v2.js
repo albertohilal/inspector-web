@@ -7,8 +7,8 @@ import { createObjectCsvWriter } from 'csv-writer';
 // === CONFIGURACIÓN GENERAL ===
 const OUTPUT_DIR = path.resolve('./reportes');
 const FUENTES_PERMITIDAS = ['Inter', 'sans-serif']; // Fuentes corporativas permitidas
-const PALETA_LUSSO = ['#d3af37', '#000000', '#ffffff', '#f5f5f5']; // Paleta corporativa oficial
-const PALETA_EXTENDIDA = ['#0D0D0D', '#404040', '#EAEAEA', '#FFFFFF', '#B8860B', '#D4AF37']; // Paleta ampliada
+const PALETA_LUSSO = ['#0D0D0D', '#404040', '#EAEAEA', '#FFFFFF', '#D4AF37', '#d4af37']; // Nueva paleta corporativa oficial (incluye variaciones de dorado)
+const PALETA_EXTENDIDA = ['#0D0D0D', '#404040', '#EAEAEA', '#FFFFFF', '#D4AF37', '#000000', '#f5f5f5']; // Paleta ampliada con variaciones
 const TOLERANCIA = 25; // margen de diferencia RGB
 
 // === FUNCIONES AUXILIARES ===
@@ -210,6 +210,13 @@ async function analyzePage(targetUrl) {
 
   await csvWriter.writeRecords(allResults);
   
+  // Agregar metadata al principio del archivo
+  if (allResults.length > 0) {
+    const csvContent = fs.readFileSync(csvPath, 'utf8');
+    const metadata = `# Inspector Web - Reporte de Análisis\n# Fecha: ${new Date().toLocaleString('es-ES')}\n# Página analizada: ${allResults[0].url}\n# Versión: 2.0\n# ═══════════════════════════════════════════════════════\n\n`;
+    fs.writeFileSync(csvPath, metadata + csvContent, 'utf8');
+  }
+  
   // Estadísticas del análisis
   const stats = {
     total: allResults.length,
@@ -219,6 +226,7 @@ async function analyzePage(targetUrl) {
   };
 
   console.log(`\n📊 RESULTADOS DEL ANÁLISIS:`);
+  console.log(`🌐 Página escaneada: ${allResults[0]?.url || 'N/A'}`);
   console.log(`📄 Total de elementos analizados: ${stats.total}`);
   console.log(`✅ Tipografía correcta: ${stats.tipografiaOK}/${stats.total} (${Math.round(stats.tipografiaOK/stats.total*100)}%)`);
   console.log(`🟡 Paleta corporativa Lusso: ${stats.colorCorporativo}/${stats.total} (${Math.round(stats.colorCorporativo/stats.total*100)}%)`);

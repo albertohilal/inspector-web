@@ -48,12 +48,12 @@ node index_v2.js -- --file urls.txt
 **¿Qué analiza?**
 - ✅ **Tipografías** (Inter, sans-serif)
 - 🎨 **Colores de texto y fondo** (valores RGB completos)
-- 🟡 **Paleta Corporativa Lusso** (`#d3af37`, `#000000`, `#ffffff`, `#f5f5f5`)
+- 🟡 **Paleta Corporativa Lusso** (`#0D0D0D`, `#404040`, `#EAEAEA`, `#FFFFFF`, `#D4AF37`)
 - 🎨 **Paleta Extendida** (variaciones adicionales permitidas)
 - ⭐ **Cumplimiento de Estándar** (tipografía + paleta válida)
-- � **Identificación precisa** con selector CSS y posición
+- 🔍 **Identificación precisa** con selector CSS y posición
 - 👻 **Manejo inteligente de transparencias** (alpha=0 considerado válido)
-- �📊 **Estadísticas automáticas** con porcentajes de cumplimiento
+- 📊 **Estadísticas automáticas** con porcentajes de cumplimiento
 
 **Columnas del reporte CSV:**
 - `Selector CSS` - Identificador específico del elemento (ej: `div.header#menu`)
@@ -105,7 +105,7 @@ Los reportes se guardan automáticamente con fecha y hora:
 
 🎨 **Detección de colores de texto y fondo** - ✅ Disponible
 
-🟡 **Comparación automática con la paleta corporativa de Lusso** (`#d3af37`, `#000000`, `#ffffff`, `#f5f5f5`) - ✅ Disponible
+🟡 **Comparación automática con la paleta corporativa de Lusso** (`#0D0D0D`, `#404040`, `#EAEAEA`, `#FFFFFF`, `#D4AF37`) - ✅ Disponible
 
 ⚡ **Optimización para servidores lentos** - ✅ Disponible en V2.1
 
@@ -127,6 +127,15 @@ Los reportes se guardan automáticamente con fecha y hora:
 - **Colores transparentes** (`rgba(r,g,b,0)`) se consideran **válidos** ✅
 - Solo se validan **colores visibles** (alpha > 0)
 - **Análisis más preciso** del cumplimiento real de la paleta
+
+### 🎨 **Nueva Paleta Corporativa Lusso:**
+| Color | Código | Uso Recomendado |
+|-------|--------|----------------|
+| **Negro** | `#0D0D0D` | Texto principal, fondos de secciones elegantes |
+| **Gris Intenso** | `#404040` | Subtítulos, iconografía secundaria |
+| **Blanco Apagado** | `#EAEAEA` | Fondos suaves de tarjetas, separadores, bordes |
+| **Blanco** | `#FFFFFF` | Fondo principal, áreas de respiro, contraste |
+| **Dorado** | `#D4AF37` | Acentos fuertes, botones primarios, elementos activos |
 
 ### 🔧 **Ejemplo de uso para debugging:**
 ```bash

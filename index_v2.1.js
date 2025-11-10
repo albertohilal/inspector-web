@@ -35,7 +35,7 @@ if (!fs.existsSync(csvDir)) fs.mkdirSync(csvDir, { recursive: true });
 
 // === Configuración de validaciones ===
 const FUENTES_PERMITIDAS = ['Inter', 'sans-serif'];
-const PALETA_LUSSO = ['#d3af37', '#000000', '#ffffff', '#f5f5f5'];
+const PALETA_LUSSO = ['#0D0D0D', '#404040', '#EAEAEA', '#FFFFFF', '#D4AF37', '#d4af37']; // Nueva paleta corporativa oficial (incluye variaciones de dorado)
 const TOLERANCIA = 25;
 
 // === Funciones de validación ===
@@ -190,6 +190,7 @@ function validarTipografia(fontFamily) {
   fs.writeFileSync(csvPath, csv, "utf8");
 
   console.log(`\n📊 RESULTADOS DEL ANÁLISIS (V2.1 Optimizada):`);
+  console.log(`🌐 Página escaneada: ${url}`);
   console.log(`📄 Total de elementos analizados: ${stats.total}`);
   console.log(`✅ Tipografía correcta: ${stats.tipografiaOK}/${stats.total} (${Math.round(stats.tipografiaOK/stats.total*100)}%)`);
   console.log(`🟡 Paleta Lusso: ${stats.paletaOK}/${stats.total} (${Math.round(stats.paletaOK/stats.total*100)}%)`);

@@ -130,7 +130,19 @@ async function analyzePage(targetUrl) {
 
   if (allResults.length > 0) {
     await csvWriter.writeRecords(allResults);
-    console.log(`✅ Reporte generado correctamente: ${csvPath}`);
+    
+    // Estadísticas básicas
+    const totalElementos = allResults.length;
+    const cumpleEstandar = allResults.filter(r => r.cumple_estandar === '✅').length;
+    
+    console.log(`\n📊 RESULTADOS DEL ANÁLISIS (V1.0):`);
+    console.log(`🌐 Páginas escaneadas: ${urls.length}`);
+    if (urls.length === 1) {
+      console.log(`📄 URL: ${allResults[0]?.url || 'N/A'}`);
+    }
+    console.log(`📄 Total de elementos analizados: ${totalElementos}`);
+    console.log(`✅ Elementos con tipografía correcta: ${cumpleEstandar}/${totalElementos} (${Math.round(cumpleEstandar/totalElementos*100)}%)`);
+    console.log(`\n✅ Reporte generado correctamente: ${csvPath}`);
   } else {
     console.log('⚠️ No se generaron resultados.');
   }
