@@ -1,14 +1,15 @@
 {
   "name": "inspector-web",
-  "version": "1.0.0",
-  "description": "Analizador profesional de fuentes y estilos web con Puppeteer y CSV export.",
+  "version": "2.0.0",
+  "description": "Analizador profesional unificado de tipografías y colores corporativos con filtros inteligentes.",
   "type": "module",
-  "main": "index.js",
+  "main": "inspector.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node inspector.js",
+    "search": "node buscar-texto.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Alberto Hilal",
+  "author": "Alberto Hilal (Lusso Group)",
   "license": "MIT",
   "dependencies": {
     "csv-writer": "^1.6.0",

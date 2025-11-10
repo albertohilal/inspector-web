@@ -1,13 +1,15 @@
-# 🕵️‍♂️ Inspector Web – Analizador de Fuentes y Estilos
+# 🕵️‍♂️ Inspector Web – Analizador Corporativo de Fuentes y Colores
 
-**Inspector Web** es una herramienta profesional desarrollada en **Node.js + Puppeteer** que permite analizar cualquier página web para verificar:
+**Inspector Web** es una herramienta profesional desarrollada en **Node.js + Puppeteer** que analiza páginas web para verificar el cumplimiento de estándares corporativos de diseño.
 
-- ✅ Uso correcto de la tipografía corporativa (por defecto, **Inter**)
-- 📊 Exportación automática a **CSV**
-- ⚙️ Análisis múltiple desde archivo de URLs
-- 💾 Reportes organizados por fecha en la carpeta `reportes/`
+## 🎯 Funcionalidades
 
----
+- ✅ **Tipografía corporativa**: Validación de fuentes Inter y sans-serif
+- 🎨 **Paleta de colores Lusso**: Verificación de colores corporativos con tolerancia
+- 🧹 **Filtros inteligentes**: Excluye elementos técnicos y se enfoca en contenido visual
+- 📊 **Reportes detallados CSV**: Con metadata completa y coordenadas de elementos
+- � **Rendimiento optimizado**: Carga rápida bloqueando solo imágenes innecesarias
+- 📍 **Identificación precisa**: Selectores CSS y posicionamiento de elementos problemáticos
 
 ## 🚀 Instalación
 
@@ -15,103 +17,177 @@
 git clone https://github.com/albertohilal/inspector-web.git
 cd inspector-web
 npm install
+```
+
 ## 🧩 Uso
 
-### 📝 Versión 1.0 - Análisis de Tipografías (por defecto)
+### 📝 Comando Principal (Análisis Completo)
 
-**Analizar una sola URL:**
 ```bash
-npm start -- --url https://lussogroup.demo.ar.nf/investment/
+# Usando npm (recomendado)
+npm start -- --url https://lussogroup.es/properties/
+
+# O directamente
+node inspector.js --url https://lussogroup.es/properties/
 ```
 
-**Analizar múltiples URLs:**
+### 🔍 Comando de Búsqueda (Herramienta Auxiliar)
+
 ```bash
-npm start -- --file urls.txt
+# Usando npm
+npm run search https://lussogroup.es/properties/ "Home"
+
+# O directamente  
+node buscar-texto.js https://lussogroup.es/properties/ "Home"
 ```
 
-**¿Qué analiza?** Solamente verifica el uso correcto de la tipografía corporativa (Inter) en todos los elementos de la página.
+## 🎯 ¿Qué Analiza Cada Comando?
 
----
+### 📊 **Análisis Principal** (`npm start`)
+**Función:** Análisis completo de cumplimiento corporativo
 
-### 🎨 Versión 2.0 - Análisis Completo de Colores + Tipografías
+**Analiza:**
+- ✅ **Tipografías**: Verifica uso correcto de Inter y sans-serif en TODOS los elementos
+- 🎨 **Colores de texto**: Valida que usen la paleta corporativa Lusso
+- 🎨 **Colores de fondo**: Verifica fondos dentro de estándares corporativos  
+- 📊 **Elementos visuales**: Solo analiza elementos realmente visibles al usuario
+- 📍 **Localización precisa**: Proporciona selectores CSS y coordenadas exactas
+- 🧹 **Filtrado inteligente**: Excluye elementos técnicos (script, style, head, etc.)
 
-**Analizar una sola URL:**
-```bash
-node index_v2.js -- --url https://lussogroup.demo.ar.nf/investment/
+**Salida:**
+- 📋 **Reporte CSV detallado** con metadata completa
+- 📊 **Estadísticas de cumplimiento** con porcentajes
+- ⚠️ **Lista de elementos problemáticos** con ubicaciones exactas
+
+### 🔍 **Búsqueda de Texto** (`npm run search`) 
+**Función:** Localizar elementos específicos por contenido textual
+
+**Analiza:**
+- 🎯 **Búsqueda exacta** del texto especificado
+- 📍 **Coordenadas** y tamaños de elementos encontrados
+- 🏷️ **Selectores CSS** para localizar en código
+- 👁️ **Visibilidad** de cada elemento
+- 🎨 **Clases CSS** aplicadas a cada elemento
+
+**Salida:**
+- 📋 **Lista detallada** de elementos que contienen el texto
+- 📍 **Posiciones exactas** para localización visual
+- 🔧 **Información técnica** para debugging
+
+## 🔬 Tipos de Análisis Detallados
+
+El **análisis principal** realiza 4 tipos de validaciones simultáneas:
+
+### 1. 🔤 **Análisis de Tipografía**
+- **¿Qué valida?** Verifica que todos los elementos usen las fuentes corporativas
+- **Fuentes permitidas:** `Inter`, `sans-serif`
+- **Resultado:** ✅ Cumple / ❌ No cumple
+- **Ejemplo problema:** Elemento usando `"Times New Roman"` en lugar de `Inter`
+
+### 2. 🎨 **Análisis de Color de Texto**
+- **¿Qué valida?** Colors RGB del texto de cada elemento
+- **Paleta permitida:** Colores corporativos Lusso con tolerancia de ±25 puntos RGB
+- **Resultado:** ✅ Dentro de paleta / ❌ Color no corporativo
+- **Ejemplo problema:** Texto en `rgb(64, 68, 4)` (verde) en lugar de negro corporativo
+
+### 3. 🖼️ **Análisis de Color de Fondo** 
+- **¿Qué valida?** Colors RGB del fondo de cada elemento
+- **Incluye:** Fondos sólidos y transparencias (alpha=0 considerado válido)
+- **Resultado:** ✅ Dentro de paleta / ❌ Color no corporativo
+- **Ejemplo problema:** Fondo en color personalizado no corporativo
+
+### 4. ⭐ **Análisis de Cumplimiento Total**
+- **¿Qué valida?** Combinación de tipografía + colores
+- **Criterio:** Elemento debe cumplir TODOS los estándares simultáneamente
+- **Resultado:** ⭐ Cumple estándar completo / ⚠️ Tiene problemas
+- **Meta:** 100% de elementos cumpliendo el estándar completo
+
+### 📊 Ejemplo de Salida
+
+```
+� Inspector Web - Análisis iniciado
+🌐 URL objetivo: https://lussogroup.es/properties/
+📅 Fecha: 2025-11-10 | ⏰ Hora: 13:42
+✅ Página cargada correctamente
+📊 Elementos analizados: 142
+
+📊 RESULTADOS DEL ANÁLISIS:
+═════════════════════════════════════════════════
+🌐 Página: https://lussogroup.es/properties/
+📄 Elementos analizados: 142
+🔤 Tipografía correcta: 142/142 (100%)
+🎨 Color texto correcto: 29/142 (20%)
+🎨 Color fondo correcto: 142/142 (100%)
+🟡 Paleta Lusso completa: 29/142 (20%)
+⭐ Cumple estándar total: 29/142 (20%)
+
+✅ Reporte generado: /reportes/reporte-2025-11-10-1342.csv
 ```
 
-**Analizar múltiples URLs:**
-```bash
-node index_v2.js -- --file urls.txt
-```
+### � Estructura del Reporte CSV
 
-**¿Qué analiza?**
-- ✅ **Tipografías** (Inter, sans-serif)
-- 🎨 **Colores de texto y fondo** (valores RGB completos)
-- 🟡 **Paleta Corporativa Lusso** (`#0D0D0D`, `#404040`, `#EAEAEA`, `#FFFFFF`, `#D4AF37`)
-- 🎨 **Paleta Extendida** (variaciones adicionales permitidas)
-- ⭐ **Cumplimiento de Estándar** (tipografía + paleta válida)
-- 🔍 **Identificación precisa** con selector CSS y posición
-- 👻 **Manejo inteligente de transparencias** (alpha=0 considerado válido)
-- 📊 **Estadísticas automáticas** con porcentajes de cumplimiento
+El archivo CSV incluye las siguientes columnas:
 
-**Columnas del reporte CSV:**
-- `Selector CSS` - Identificador específico del elemento (ej: `div.header#menu`)
-- `Pos X/Y` - Coordenadas exactas en la página
-- `Ancho/Alto` - Dimensiones del elemento
-- `✅ Tipografía OK` - Check individual de fuentes
-- `🟡 Paleta Lusso` - Check de paleta corporativa oficial  
-- `🎨 Paleta Extendida` - Check de paleta ampliada
-- `⭐ Cumple Estándar` - Check combinado (tipografía + color)
+| Campo | Descripción |
+|-------|-------------|
+| `fecha_analisis` | Fecha del análisis |
+| `hora_analisis` | Hora del análisis |
+| `url_analizada` | URL de la página analizada |
+| `selector_css` | Selector CSS único del elemento |
+| `elemento_tag` | Tipo de elemento HTML (div, h1, p, etc.) |
+| `posicion_x`, `posicion_y` | Coordenadas del elemento en la página |
+| `ancho`, `alto` | Dimensiones del elemento |
+| `texto` | Contenido textual del elemento |
+| `fuente_detectada` | Fuente CSS detectada |
+| `tamano_fuente` | Tamaño de la fuente |
+| `peso_fuente` | Peso de la fuente (bold, normal, etc.) |
+| `tipografia_ok` | ✅/❌ Cumple tipografía corporativa |
+| `color_texto`, `color_fondo` | Colores RGB detectados |
+| `color_texto_ok`, `color_fondo_ok` | ✅/❌ Colores dentro de paleta |
+| `paleta_lusso_ok` | ✅/❌ Cumple paleta completa |
+| `cumple_estandar_completo` | ⭐/⚠️ Cumple todos los estándares |
 
----
+### � Archivos de Salida
 
-### 🚀 Versión 2.1 - Análisis Optimizado (iFastNet)
+Los reportes se guardan automáticamente con fecha y hora en la carpeta `reportes/`:
+- **Formato:** `reporte-AAAA-MM-DD-HHMM.csv`
+- **Ejemplo:** `reporte-2025-11-10-1342.csv`
 
-**Analizar una sola URL:**
-```bash
-node index_v2.1.js -- --url https://lussogroup.demo.ar.nf/investment/
-```
+## 🧹 Filtrado Inteligente de Elementos
 
-**¿Qué analiza?**
-- ✅ Tipografías (Inter)
-- 🎨 **Extracción básica de colores** (sin validación de paleta)
-- ⚡ **Optimizado para servidores lentos** (timeout extendido + interceptación inteligente)
+El Inspector Web incluye **filtros automáticos** para enfocarse solo en elementos relevantes:
 
----
+### ❌ **Elementos Excluidos Automáticamente:**
+- **Elementos técnicos:** `<head>`, `<script>`, `<style>`, `<meta>`, `<link>`
+- **Elemento raíz:** `<html>` (contiene código técnico)
+- **Elementos ocultos:** `display: none`, `visibility: hidden`, `opacity: 0`
+- **Elementos sin dimensiones:** Ancho o alto = 0px
+- **Elementos fuera de pantalla:** Posición < -1000px
+- **Código embebido:** Elementos con JavaScript o CSS inline
 
-### 📊 Archivos de salida
+### ✅ **Elementos Analizados:**
+- **Solo elementos visuales** realmente visibles al usuario
+- **Con contenido textual** relevante (3-100 caracteres)
+- **Con dimensiones positivas** y posición visible
+- **Sin código técnico** en su contenido
 
-Los reportes se guardan automáticamente con fecha y hora:
-- **V1.0:** `/reportes/reporte-AAAA-MM-DD-HHMM.csv`
-- **V2.0:** `/reportes/reporte-v2-AAAA-MM-DD-HHMM.csv`
-- **V2.1:** `/reportes/reporte-v2.1-AAAA-MM-DD-HHMM.csv`
+### 📊 **Beneficios del Filtrado:**
+- **Reduce ruido:** Elimina ~40% de elementos irrelevantes
+- **Resultados precisos:** Se enfoca en UX real del usuario
+- **Reportes limpios:** Solo elementos que importan para branding
 
-**Ejemplo:** `reporte-v2-2025-11-06-1330.csv` (6 nov 2025 a las 13:30)
+## 🎨 Configuración de Paletas
 
----
+### Paleta Corporativa Lusso (por defecto)
+- `#0D0D0D` - Negro corporativo
+- `#404040` - Gris intenso  
+- `#EAEAEA` - Blanco suave
+- `#FFFFFF` - Blanco puro
+- `#D4AF37` - Dorado corporativo
 
-## 💡 ¿Cuál versión usar?
-
-| Situación | Versión recomendada | Comando |
-|-----------|-------------------|---------|
-| Solo necesitas verificar tipografías | **V1.0** | `npm start -- --url [URL]` |
-| Necesitas análisis completo de colores + paleta corporativa | **V2.0** | `node index_v2.js -- --url [URL]` |
-| Servidor lento o problemas de timeout | **V2.1** | `node index_v2.1.js -- --url [URL]` |
-
----
-
-## ✅ Funcionalidades Implementadas (V2.0 y V2.1)
-
-🎨 **Detección de colores de texto y fondo** - ✅ Disponible
-
-🟡 **Comparación automática con la paleta corporativa de Lusso** (`#0D0D0D`, `#404040`, `#EAEAEA`, `#FFFFFF`, `#D4AF37`) - ✅ Disponible
-
-⚡ **Optimización para servidores lentos** - ✅ Disponible en V2.1
-
-🔍 **Identificación precisa de elementos** - ✅ Disponible
-
-👻 **Manejo inteligente de transparencias** - ✅ Disponible
+### Tipografías Permitidas
+- `Inter` - Fuente corporativa principal
+- `sans-serif` - Fuente de respaldo
 
 ---
 
@@ -129,39 +205,48 @@ Los reportes se guardan automáticamente con fecha y hora:
 - **Análisis más preciso** del cumplimiento real de la paleta
 
 ### 🎨 **Nueva Paleta Corporativa Lusso:**
-| Color | Código | Uso Recomendado |
-|-------|--------|----------------|
-| **Negro** | `#0D0D0D` | Texto principal, fondos de secciones elegantes |
-| **Gris Intenso** | `#404040` | Subtítulos, iconografía secundaria |
-| **Blanco Apagado** | `#EAEAEA` | Fondos suaves de tarjetas, separadores, bordes |
-| **Blanco** | `#FFFFFF` | Fondo principal, áreas de respiro, contraste |
-| **Dorado** | `#D4AF37` | Acentos fuertes, botones primarios, elementos activos |
+## 🔧 Herramientas Auxiliares
 
-### 🔧 **Ejemplo de uso para debugging:**
+### 🔍 Búsqueda de Texto
+Localiza elementos específicos por contenido:
 ```bash
+node buscar-texto.js https://ejemplo.com "texto a buscar"
+```
+
+## 🚧 Versionado
+
+- **Versiones anteriores**: Disponibles en `versiones-anteriores/`
+- **Versión actual**: `inspector.js` - Versión unificada con todas las funcionalidades
+
+## 🔧 Desarrollo
+
+### Estructura del Proyecto
+```
+inspector-web/
+├── inspector.js          # Herramienta principal unificada
+├── buscar-texto.js       # Utilidad de búsqueda
+├── reportes/            # Reportes CSV generados
+├── versiones-anteriores/ # Versiones previas archivadas
+└── README.md            # Documentación
+```
+
+### Para Desarrolladores
+```bash
+# Clonar e instalar
+git clone https://github.com/albertohilal/inspector-web.git
+cd inspector-web
+npm install
+
 # Ejecutar análisis
-node index_v2.js --url https://tudominio.com
+node inspector.js --url https://ejemplo.com
 
-# Buscar elementos problemáticos en el CSV
-grep "❌" reportes/reporte-v2-2025-11-06-HHMM.csv
-
-# El reporte te dará:
-# - Selector CSS exacto para localizar en el código
-# - Posición en pantalla para encontrar visualmente  
-# - Colores específicos que causan el problema
+# Ver reportes
+ls reportes/
 ```
 
 ---
 
-## 🚧 Próximas mejoras (V3)
-
- **Reportes de accesibilidad** - Análisis de contraste WCAG AA/AAA
-
-🧪 **Análisis de elementos específicos** - Filtros por selector CSS personalizado
-
-📱 **Detección responsive** - Análisis en múltiples breakpoints (mobile, tablet, desktop)
-
-🎨 **Paletas personalizables** - Configuración de colores corporativos por proyecto
+**Desarrollado por el equipo de Lusso Group para el control de calidad de diseño web corporativo.**
 
 📈 **Dashboard web** - Interface visual para análisis y comparaciones
 

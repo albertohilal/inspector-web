@@ -1,5 +1,6 @@
 node_modules/
 reportes/
+versiones-anteriores/
 *.log
 .DS_Store
 *.tmp
